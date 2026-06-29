@@ -209,7 +209,7 @@
         }
     </style> 
 
-    <!-- ⬇️ ✅ အစ်ကို့ရဲ့ Adsterra Popunder Ad Code ကို အောက်ကလိုင်းမှာ အစားထိုးထည့်ပေးပါဗျာ -->
+    <!-- ✅ Adsterra Popunder Ad Code Installed -->
     <script src="https://pl30113839.effectivecpmnetwork.com/88/fa/a4/88faa4a05cfd052c19ce9700f135d7b6.js"></script>
 </head>
 <body> 
@@ -240,11 +240,12 @@
             </div>
         </div>
 
-        <!-- 3. CATEGORY LAYER -->
+        <!-- 3. CATEGORY LAYER (ဂျပန်ကားများ ထည့်သွင်းပြီး) -->
         <div class="category-layer">
             <button onclick="filterCategory('myanmar', this)" class="active">မြန်မာကားများ</button>
             <button onclick="filterCategory('thai', this)">ထိုင်းကားများ</button>
             <button onclick="filterCategory('korean', this)">ကိုရီးယားကားများ</button>
+            <button onclick="filterCategory('jav', this)">ဂျပန်ကားများ</button>
         </div>
     </div>
 
@@ -276,6 +277,9 @@
         let page = 1;
         let currentQuery = 'myanmar';
         const perPage = 24; 
+        
+        // ဗီဒီယို ID များကို မှတ်ထားပြီး ထပ်မလာအောင် စစ်ထုတ်မည့် စာရင်း
+        let loadedVideoIds = new Set();
 
         const popup = document.getElementById('popupNotice');
         const videoGrid = document.getElementById('videoGrid');
@@ -285,7 +289,6 @@
         const videoTitle = document.getElementById('videoTitle');
         const loadMoreBtn = document.getElementById('loadMoreBtn'); 
 
-        // တစ်ခါပိတ်ပြီးရင် ထပ်မပြစေမည့် localStorage Logic
         window.addEventListener('DOMContentLoaded', () => {
             const isNoticeClosed = localStorage.getItem('yoyolay_notice_closed');
             if (!isNoticeClosed) {
@@ -302,13 +305,15 @@
             }, 300);
         }
 
+        // Random Page Generator (1 မှ 35 အထိ စာမျက်နှာကို ကျပန်းရွေးချယ်ရန်)
         function getRandomPage() {
-            return Math.floor(Math.random() * 25) + 1;
+            return Math.floor(Math.random() * 35) + 1;
         } 
 
         async function fetchVideos(query = 'myanmar', append = false) {
             if (!append) { 
                 page = getRandomPage();
+                loadedVideoIds.clear(); // Category အသစ်ပြောင်းရင် စာရင်းဟောင်းကို ဖျက်မည်
                 videoGrid.innerHTML = '<p style="padding:20px; color:#e48200; font-weight:600; font-size:14px;">...ဗီဒီယိုများ အသစ်ပြောင်းလဲဆွဲယူနေပါသည်</p>'; 
             }
             try {
@@ -320,8 +325,20 @@
                 if (!append) videoGrid.innerHTML = ''; 
 
                 if (data && data.videos && data.videos.length > 0) {
+                    // 🌟 စနစ် (၁) - ရလာတဲ့ ဗီဒီယိုစာရင်းကိုပါ Random ပြန်မွှေပစ်ခြင်း (Shuffle)
                     let shuffledVideos = data.videos.sort(() => Math.random() - 0.5);
-                    renderCards(shuffledVideos);
+                    
+                    // 🌟 စနစ် (၂) - ID ကို စစ်ပြီး ထပ်နေတဲ့ ဗီဒီယိုတွေကို လုံးဝဖယ်ထုတ်ခြင်း
+                    let uniqueVideos = shuffledVideos.filter(v => {
+                        if (loadedVideoIds.has(v.id)) {
+                            return false; 
+                        } else {
+                            loadedVideoIds.add(v.id);
+                            return true;
+                        }
+                    });
+
+                    renderCards(uniqueVideos);
                     loadMoreBtn.style.display = 'block';
                 } else {
                     if (!append) videoGrid.innerHTML = '<p style="padding:20px; color:#b39286; font-size:14px;">ဗီဒီယို ရှာမတွေ့ပါ။</p>';
@@ -384,7 +401,10 @@
         } 
 
         function loadMore() {
-            page++;
+            // Load More နှိပ်ရင် နောက်ထပ် Random စာမျက်နှာသစ်တစ်ခုကနေ ထပ်ဆွဲမည်
+            let nextPage = getRandomPage();
+            if(nextPage === page) nextPage++; 
+            page = nextPage;
             fetchVideos(currentQuery, true);
         } 
 
@@ -392,7 +412,7 @@
         fetchVideos('myanmar', false);
     </script> 
 
-    <!-- ⬇️ ✅ အစ်ကို့ရဲ့ Adsterra Social Bar Ad Code ကို အောက်ကလိုင်းမှာ အစားထိုးထည့်ပေးပါဗျာ -->
+    <!-- ✅ Adsterra Social Bar Ad Code Installed -->
     <script src="https://pl30113840.effectivecpmnetwork.com/75/8d/2b/758d2bc609f0ffb2343da3a1f6a0207f.js"></script>
 </body>
 </html>
