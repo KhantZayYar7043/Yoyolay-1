@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>yoyoLay</title>
+    <title>MaHayTi.com</title>
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Roboto, sans-serif; }
         
@@ -52,7 +52,7 @@
             font-weight: 900; 
             cursor: pointer; 
             user-select: none; 
-            letter-spacing: 3px;
+            letter-spacing: 2px;
             animation: orangeNeonGlow 3s infinite alternate, textPulse 1.6s infinite ease-in-out;
         }
 
@@ -209,7 +209,7 @@
         }
     </style> 
 
-    <!-- ✅ Adsterra Popunder Ad Code Installed -->
+    <!-- ✅ Adsterra Popunder Ad Code -->
     <script src="https://pl30113839.effectivecpmnetwork.com/88/fa/a4/88faa4a05cfd052c19ce9700f135d7b6.js"></script>
 </head>
 <body> 
@@ -227,9 +227,9 @@
     </div>
 
     <div class="app-layout">
-        <!-- 1. TITLE LAYER -->
+        <!-- 1. TITLE LAYER (MaHayTi.com သို့ ပြောင်းလဲပြင်ဆင်ပြီး) -->
         <header>
-            <div class="logo" onclick="goHome()">yoyoLay</div>
+            <div class="logo" onclick="goHome()">MaHayTi.com</div>
         </header> 
 
         <!-- 2. SEARCH LAYER -->
@@ -240,7 +240,7 @@
             </div>
         </div>
 
-        <!-- 3. CATEGORY LAYER (ဂျပန်ကားများ ထည့်သွင်းပြီး) -->
+        <!-- 3. CATEGORY LAYER -->
         <div class="category-layer">
             <button onclick="filterCategory('myanmar', this)" class="active">မြန်မာကားများ</button>
             <button onclick="filterCategory('thai', this)">ထိုင်းကားများ</button>
@@ -278,7 +278,6 @@
         let currentQuery = 'myanmar';
         const perPage = 24; 
         
-        // ဗီဒီယို ID များကို မှတ်ထားပြီး ထပ်မလာအောင် စစ်ထုတ်မည့် စာရင်း
         let loadedVideoIds = new Set();
 
         const popup = document.getElementById('popupNotice');
@@ -290,7 +289,7 @@
         const loadMoreBtn = document.getElementById('loadMoreBtn'); 
 
         window.addEventListener('DOMContentLoaded', () => {
-            const isNoticeClosed = localStorage.getItem('yoyolay_notice_closed');
+            const isNoticeClosed = localStorage.getItem('mahayti_notice_closed');
             if (!isNoticeClosed) {
                 popup.style.display = 'flex';
                 setTimeout(() => { popup.style.opacity = '1'; }, 50);
@@ -298,14 +297,13 @@
         });
 
         function closeNotice() {
-            localStorage.setItem('yoyolay_notice_closed', 'true');
+            localStorage.setItem('mahayti_notice_closed', 'true');
             popup.style.opacity = '0';
             setTimeout(() => {
                 popup.style.display = 'none';
             }, 300);
         }
 
-        // Random Page Generator (1 မှ 35 အထိ စာမျက်နှာကို ကျပန်းရွေးချယ်ရန်)
         function getRandomPage() {
             return Math.floor(Math.random() * 35) + 1;
         } 
@@ -313,7 +311,7 @@
         async function fetchVideos(query = 'myanmar', append = false) {
             if (!append) { 
                 page = getRandomPage();
-                loadedVideoIds.clear(); // Category အသစ်ပြောင်းရင် စာရင်းဟောင်းကို ဖျက်မည်
+                loadedVideoIds.clear(); 
                 videoGrid.innerHTML = '<p style="padding:20px; color:#e48200; font-weight:600; font-size:14px;">...ဗီဒီယိုများ အသစ်ပြောင်းလဲဆွဲယူနေပါသည်</p>'; 
             }
             try {
@@ -325,10 +323,8 @@
                 if (!append) videoGrid.innerHTML = ''; 
 
                 if (data && data.videos && data.videos.length > 0) {
-                    // 🌟 စနစ် (၁) - ရလာတဲ့ ဗီဒီယိုစာရင်းကိုပါ Random ပြန်မွှေပစ်ခြင်း (Shuffle)
                     let shuffledVideos = data.videos.sort(() => Math.random() - 0.5);
                     
-                    // 🌟 စနစ် (၂) - ID ကို စစ်ပြီး ထပ်နေတဲ့ ဗီဒီယိုတွေကို လုံးဝဖယ်ထုတ်ခြင်း
                     let uniqueVideos = shuffledVideos.filter(v => {
                         if (loadedVideoIds.has(v.id)) {
                             return false; 
@@ -401,7 +397,6 @@
         } 
 
         function loadMore() {
-            // Load More နှိပ်ရင် နောက်ထပ် Random စာမျက်နှာသစ်တစ်ခုကနေ ထပ်ဆွဲမည်
             let nextPage = getRandomPage();
             if(nextPage === page) nextPage++; 
             page = nextPage;
@@ -412,7 +407,7 @@
         fetchVideos('myanmar', false);
     </script> 
 
-    <!-- ✅ Adsterra Social Bar Ad Code Installed -->
+    <!-- ✅ Adsterra Social Bar Ad Code -->
     <script src="https://pl30113840.effectivecpmnetwork.com/75/8d/2b/758d2bc609f0ffb2343da3a1f6a0207f.js"></script>
 </body>
 </html>
